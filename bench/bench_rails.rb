@@ -1,6 +1,6 @@
-require 'ultralite'
-require 'active_support'
-require './bench'
+require "ultralite"
+require "active_support"
+require "./bench"
 
 cache = ActiveSupport::Cache.lookup_store(:ultralite_cache_store, {})
 mem = ActiveSupport::Cache.lookup_store(:ultralite_cache_store, {path: ":memory:"})
@@ -12,10 +12,10 @@ count = 1000
 
 [10, 100, 1000, 10000].each do |size|
   count.times do
-    keys << random_str(10) 
-    values << random_str(size) 
+    keys << random_str(10)
+    values << random_str(size)
   end
-  
+
   random_keys = keys.shuffle
   puts "Benchmarks for values of size #{size} bytes"
   puts "=========================================================="
@@ -46,20 +46,18 @@ count = 1000
   end
   puts "=========================================================="
 
-
   keys = []
   values = []
 end
 
-
 cache.write("somekey", 1, raw: true)
-#puts cache.read("somekey", raw: true)
+# puts cache.read("somekey", raw: true)
 
 mem.write("somekey", 1, raw: true)
-#puts mem.read("somekey", raw: true)
+# puts mem.read("somekey", raw: true)
 
 redis.write("somekey", 1, raw: true)
-#puts redis.read("somekey", raw: true)
+# puts redis.read("somekey", raw: true)
 
 puts "Benchmarks for incrementing integer values"
 puts "=========================================================="
@@ -73,9 +71,8 @@ bench("Ultralite memory cache increment", count) do
 end
 
 bench("Redis increment", count) do
-  redis.increment("somekey", 1, raw: true )
+  redis.increment("somekey", 1, raw: true)
 end
 
 cache.clear
 redis.clear
-

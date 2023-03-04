@@ -1,17 +1,17 @@
-require 'redis'
-require 'sqlite3'
-require_relative './bench'
+require "redis"
+require "sqlite3"
+require_relative "./bench"
 
-#require 'polyphony'
-require 'async/scheduler'
+# require 'polyphony'
+require "async/scheduler"
 
 Fiber.set_scheduler Async::Scheduler.new
 Fiber.scheduler.run
 
-require_relative '../lib/litestack'
-#require 'litestack'
+require_relative "../lib/litestack"
+# require 'litestack'
 
-cache = Litecache.new({path: '../db/cache.db'}) # default settings
+cache = Litecache.new({path: "../db/cache.db"}) # default settings
 redis = Redis.new # default settings
 
 values = []
@@ -21,9 +21,9 @@ count.times { keys << random_str(10) }
 
 [10, 100, 1000, 10000].each do |size|
   count.times do
-    values << random_str(size) 
+    values << random_str(size)
   end
-  
+
   random_keys = keys.shuffle
   puts "Benchmarks for values of size #{size} bytes"
   puts "=========================================================="
@@ -49,7 +49,6 @@ count.times { keys << random_str(10) }
   values = []
 end
 
-
 cache.set("somekey", 1)
 redis.set("somekey", 1)
 
@@ -65,4 +64,3 @@ cache.clear
 redis.flushdb
 
 sleep
-

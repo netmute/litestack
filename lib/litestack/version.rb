@@ -2,4 +2,4 @@
 
 module Litestack
   VERSION = "0.1.6"
-end       
+end

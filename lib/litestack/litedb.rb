@@ -1,11 +1,10 @@
 # all components should require the support module
-require_relative 'litesupport'
+require_relative "litesupport"
 
 # Litedb inherits from the SQLite3::Database class and adds a few initialization options
 class Litedb < ::SQLite3::Database
-
   # overrride the original initilaizer to allow for connection configuration
-  def initialize(file, options = {}, zfs = nil )
+  def initialize(file, options = {}, zfs = nil)
     if block_given?
       super(file, options, zfs) do |db|
         init unless options[:noinit] == true
@@ -24,12 +23,12 @@ class Litedb < ::SQLite3::Database
 
   private
 
-  # default connection configuration values 
+  # default connection configuration values
   def init
     # version 3.37 is required for strict typing support and the newest json operators
     raise Litesupport::Error if SQLite3::SQLITE_VERSION_NUMBER < 3037000
     # time to wait to obtain a write lock before raising an exception
-    self.busy_handler{|i| sleep 0.001}
+    busy_handler { |i| sleep 0.001 }
     # level of database durability, 2 = "FULL" (sync on every write), other values include 1 = "NORMAL" (sync every 1000 written pages) and 0 = "NONE"
     self.synchronous = 1
     # Journal mode WAL allows for greater concurrency (many readers + one writer)
@@ -37,11 +36,8 @@ class Litedb < ::SQLite3::Database
     # impose a limit on the WAL file to prevent unlimited growth (with a negative impact on read performance as well)
     self.journal_size_limit = 64 * 1024 * 1024
     # set the global memory map so all processes can share data
-    self.mmap_size = 128 * 1024 * 1024 
+    self.mmap_size = 128 * 1024 * 1024
     # increase the local connection cache to 2000 pages
     self.cache_size = 2000
   end
-
 end
-
-

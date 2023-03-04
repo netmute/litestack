@@ -26,7 +26,7 @@ Gem::Specification.new do |spec|
     end
   end
   spec.bindir = "bin"
-  #spec.executables = spec.files.grep(%r{\Aexe/}) { |f| File.basename(f) }
+  # spec.executables = spec.files.grep(%r{\Aexe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib", "lib/litestack"]
 
   spec.add_dependency "sqlite3"
