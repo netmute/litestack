@@ -86,7 +86,7 @@ module ActiveRecord
     end
 
     module DatabaseTasks
-      register_task(/ultralite/, "ActiveRecord::Tasks::LitedbDatabaseTasks")
+      register_task(/litedb/, "ActiveRecord::Tasks::LitedbDatabaseTasks")
     end
   end
 end

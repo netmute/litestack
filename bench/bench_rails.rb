@@ -1,9 +1,9 @@
-require "ultralite"
+require "litestack"
 require "active_support"
 require "./bench"
 
-cache = ActiveSupport::Cache.lookup_store(:ultralite_cache_store, {})
-mem = ActiveSupport::Cache.lookup_store(:ultralite_cache_store, {path: ":memory:"})
+cache = ActiveSupport::Cache.lookup_store(:litecache_cache_store, {})
+mem = ActiveSupport::Cache.lookup_store(:litecache_cache_store, {path: ":memory:"})
 redis = ActiveSupport::Cache.lookup_store(:redis_cache_store, {})
 
 values = []
@@ -20,11 +20,11 @@ count = 1000
   puts "Benchmarks for values of size #{size} bytes"
   puts "=========================================================="
   puts "== Writes =="
-  bench("Ultralite cache writes", count) do |i|
+  bench("Litecache cache writes", count) do |i|
     cache.write(keys[i], values[i])
   end
 
-  bench("Ultralite memory cache writes", count) do |i|
+  bench("Litecache memory cache writes", count) do |i|
     mem.write(keys[i], values[i])
   end
 
@@ -33,11 +33,11 @@ count = 1000
   end
 
   puts "== Reads =="
-  bench("Ultralite cache reads", count) do |i|
+  bench("Litecache cache reads", count) do |i|
     cache.read(random_keys[i])
   end
 
-  bench("Ultralite memory cache reads", count) do |i|
+  bench("Litecache memory cache reads", count) do |i|
     mem.read(random_keys[i])
   end
 
@@ -62,11 +62,11 @@ redis.write("somekey", 1, raw: true)
 puts "Benchmarks for incrementing integer values"
 puts "=========================================================="
 
-bench("Ultralite cache increment", count) do
+bench("Litecache cache increment", count) do
   cache.increment("somekey", 1, raw: true)
 end
 
-bench("Ultralite memory cache increment", count) do
+bench("Litecache memory cache increment", count) do
   mem.increment("somekey", 1, raw: true)
 end
 

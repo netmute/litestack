@@ -1,10 +1,10 @@
-require "ultralite"
+require "litestack"
 require "./bench"
 require "redis"
 require "sqlite3"
 
-cache = Ultralite::Cache.new # default settings
-# mem = Ultralite::Cache.new(path: ":memory:") # default settings
+cache = Litecache::Cache.new # default settings
+# mem = Litecache::Cache.new(path: ":memory:") # default settings
 redis = Redis.new # default settings
 
 values = []
@@ -21,11 +21,11 @@ count.times { keys << random_str(10) }
   puts "Benchmarks for values of size #{size} bytes"
   puts "=========================================================="
   puts "== Writes =="
-  bench("Ultralite cache writes", count) do |i|
+  bench("Litecache cache writes", count) do |i|
     cache.set(keys[i], values[i])
   end
 
-  # bench("Ultralite memory cache writes", count) do |i|
+  # bench("Litecache memory cache writes", count) do |i|
   #   mem.set(keys[i], values[i])
   # end
 
@@ -34,11 +34,11 @@ count.times { keys << random_str(10) }
   end
 
   puts "== Reads =="
-  bench("Ultralite cache reads", count) do |i|
+  bench("Litecache cache reads", count) do |i|
     cache.get(random_keys[i])
   end
 
-  # bench("Ultralite memory cache reads", count) do |i|
+  # bench("Litecache memory cache reads", count) do |i|
   #   cache.get(random_keys[i])
   # end
 
@@ -54,11 +54,11 @@ cache.set("somekey", 1)
 # mem.set("somekey", 1)
 redis.set("somekey", 1)
 
-bench("Ultralite cache increment") do
+bench("Litecache cache increment") do
   cache.increment("somekey", 1)
 end
 
-# bench("Ultralite memory cache increment") do
+# bench("Litecache memory cache increment") do
 #  mem.increment("somekey", 1)
 # end
 

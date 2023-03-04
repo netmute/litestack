@@ -7,7 +7,7 @@ require "active_job"
 
 module ActiveJob
   module QueueAdapters
-    # == Ultralite adapter for Active Job
+    # == Litejob adapter for Active Job
     #
     #
     #   Rails.application.config.active_job.queue_adapter = :litejob
